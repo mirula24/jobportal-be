@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 public interface UserEntityService {
     UserEntity create(AuthDto request);
     Page<UserEntity> getAll(String username, Pageable pageable);
-    UserEntity getOne(Integer id);
-    UserEntity update(Integer id, AuthDto request);
+    UserEntity getOne(Long id);
+    UserEntity update(Long id, AuthDto request);
+    void delete(Long id);
 }
