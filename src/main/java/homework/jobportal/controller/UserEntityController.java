@@ -1,7 +1,6 @@
 package homework.jobportal.controller;
-import homework.jobportal.model.UserEntity;
+import homework.jobportal.dto.UserDto;
 import homework.jobportal.service.UserEntityService;
-import homework.jobportal.util.response.Response;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -13,29 +12,27 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/api/v1/user")
+@RequestMapping("/api/admin/users")
 @RequiredArgsConstructor
 @Validated
 public class UserEntityController {
     private final UserEntityService userEntityService;
 
-    @GetMapping
-    public ResponseEntity<?> getAll(@Valid @PageableDefault Pageable pageable, @RequestParam(required = false) String username){
-        var data =userEntityService.getAll(username,pageable);
-        return Response.renderJSON(
-                data,
-                "This is all of users",
-                HttpStatus.OK
-        );
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getUserProfile(@PathVariable Long id){
+        return new ResponseEntity(userEntityService.getUserProfile(id), HttpStatus.OK);
     }
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteById(@Valid @PathVariable Long id){
-        userEntityService.delete(id);
-        return Response.renderJSON(
-            null,
-                "user succes delete",
-                HttpStatus.ACCEPTED
-        );
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateUserProfile(@PathVariable Long id,
+                                               @RequestBody UserDto request){
+        return new ResponseEntity(userEntityService.updateUserProfile(id,request),HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<?> getAllUsers(@PageableDefault Pageable pageable,
+                                         @RequestBody(required = false) UserDto userDto){
+        return new ResponseEntity(userEntityService.getAllUsers(pageable,userDto),HttpStatus.OK);
     }
 
 

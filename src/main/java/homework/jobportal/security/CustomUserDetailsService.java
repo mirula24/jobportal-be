@@ -1,8 +1,7 @@
 package homework.jobportal.security;
 
-
 import homework.jobportal.model.UserEntity;
-import homework.jobportal.repository.UserRepository;
+import homework.jobportal.repository.UserEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,7 +15,7 @@ import java.util.Collections;
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserEntityRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

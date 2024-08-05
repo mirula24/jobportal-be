@@ -23,6 +23,7 @@ public class UserEntity {
     private Role role;
 
     public enum Role {
-        USER, ADMIN , SUPER_ADMIN
+        USER, SUPER_ADMIN
     }
+
 }
